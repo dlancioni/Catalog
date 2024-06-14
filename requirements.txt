@@ -1,4 +1,4 @@
-flask-sqlalchemy
 flask
+flask-sqlalchemy
 jinja2
 psycopg2
