@@ -1,17 +1,15 @@
+from dotenv import load_dotenv, find_dotenv
 from flask import Flask
-from src.db.config import db, url
+from web.routes.home import bp_home
+from web.routes.payment import bp_payment
+from web.routes.transaction import bp_transaction
+from web.routes.arcesium import bp_arcesium
 
-from web.blueprints.home import bp_home
-from web.blueprints.user import bp_user
-
-def setup_database(app):
-    app.config['DEBUG'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = url
-    db.init_app(app)
-    
 def setup_blueprints(app):
     app.register_blueprint(bp_home)
-    app.register_blueprint(bp_user)
+    app.register_blueprint(bp_payment)
+    app.register_blueprint(bp_transaction)
+    app.register_blueprint(bp_arcesium)
 
 def create_app():
     app = Flask(__name__,
@@ -19,10 +17,10 @@ def create_app():
                 static_folder="web/static",
                 template_folder="web/templates")
     
-    setup_database(app)
     setup_blueprints(app)
     return app
 
 if __name__ == "__main__":
+    load_dotenv(find_dotenv())    
     app = create_app()
     app.run()
