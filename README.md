@@ -1,2 +1,2 @@
-# Catalog
-Solution to demo company´s product
+# Template
+Template for python/flask projects
