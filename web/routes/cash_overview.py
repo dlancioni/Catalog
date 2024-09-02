@@ -16,6 +16,7 @@ def cash_overview_list(id):
     arcesium = Arcesium()
 
     i = 0
+    flag_action = False
     total = Decimal(0)
     data = list()
     diff = list()
@@ -47,16 +48,33 @@ def cash_overview_list(id):
                 action = "No action"
             else:    
                 action = "Remove this date from Arcesium"
+                flag_action = True
 
             # Rule 2
             if len(rs) == 2:
                 if len(rs) == i:
                     if abs(total) > total_transaction:
                         if abs(total) == abs(total_arcesium):
-                            action = "Remove entry from Arcesium"
+                            if flag_action == False:
+                                action = "Remove entry from Arcesium"
 
+            # Rule 3 not a break
+            if abs(total_payment) == abs(total_transaction) and abs(total_transaction) == abs(total_arcesium):
+                action = "No action"
+
+
+            # keep the item    
             arr = [enter_date, enter_amount, checked_amount, action]
             diff.append(arr)
+
+
         data.append(diff)
 
+    else:
+
+         data.append(0)   
+         data.append(0)   
+         data.append(0)   
+
     return render_template("cash_overview.html", id=id, data=data)
+    
