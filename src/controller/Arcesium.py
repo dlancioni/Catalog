@@ -4,7 +4,7 @@ db = Db()
 
 class Arcesium():
 
-    def get_trade(self, payment_id):
+    def get_trade(self, payment_id, total_only=False):
         sql = f"""
         select 
         trade_id, 
@@ -27,21 +27,26 @@ class Arcesium():
             else 'S'
         end as side,
         quantity, 
-        custodian_account_name, 
         currency, 
-        book_name, 
         date(settle_date) as settle_date, 
-        date(actual_settle_date) as actual_settle_date, 
-        pnl_spn, 
-        comment, 
-        external_id, 
-        date(time_entered) as time_entered,
-        desname as spn_desc, 
-        short_desc as spn          
+        date(time_entered) as time_entered
         from pfs_ar.arcesium.trades_raw
         where 1=1
         and external_id like '900%'
-        and (comment like '%ra_no [{payment_id}]%')
+        and (comment like '%RA_NO [{payment_id}]%')
         """
+
+        if total_only:
+            sql = \
+            f"""
+            select 
+            round(sum(tb.quantity), 2) quantity
+            from 
+            (
+                {sql}        
+            ) tb
+            order by tb.time_entered asc
+            """
+
         ds = db.query(sql)
         return ds

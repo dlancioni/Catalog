@@ -5,7 +5,7 @@
 <h2>Arcesium</h2>
 
 <form id="form1" name="form1">
-  <input type="text" id="id" value=""> <input type="button" value="Query" onClick="query()">
+  <input type="text" id="id" value="{{ id }}"> <input type="button" value="Query" onClick="query()">
 </form>
 
 <div style="overflow-x:auto;">
@@ -13,17 +13,13 @@
 <table class="table table-borderless">
     <thead>
       <tr>
+        <th scope="col">Trade Id</th>
+        <th scope="col">Trade Date</th>
         <th scope="col">Side</th>
-        <th scope="col">Geo Id</th>
-        <th scope="col">Geo</th>
-        <th scope="col">Fin Acct Id</th>
-        <th scope="col">Fin Name</th>
-        <th scope="col">Fin Code</th>
-        <th scope="col">Fin Currency</th>        
-        <th scope="col">Sup Acct Id</th>
-        <th scope="col">Sup Name</th>
-        <th scope="col">Sup Code</th>
-        <th scope="col">Dlr Acct Id</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Currency</th>
+        <th scope="col">St. Date</th>
+        <th scope="col">Time Entered</th>
       </tr>
     </thead>
     <tbody>
@@ -38,10 +34,6 @@
             <td>{{ item[4] }}</td>
             <td>{{ item[5] }}</td>          
             <td>{{ item[6] }}</td>
-            <td>{{ item[7] }}</td>
-            <td>{{ item[8] }}</td>                    
-            <td>{{ item[9] }}</td>
-            <td>{{ item[10] }}</td>
           </tr>
           </p>
           {% endfor %}

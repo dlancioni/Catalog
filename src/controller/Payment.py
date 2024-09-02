@@ -4,7 +4,7 @@ db = Db()
 
 class Payment():
 
-    def get_payment(self, payment_id):
+    def get_payment(self, payment_id, total_only=False):
         sql = f"""
         select 
             pmt.id,
@@ -36,17 +36,22 @@ class Payment():
             on pmt.funder_bank_account_id=b.id
         where 1=1
         and pmt.id in ({payment_id})
-
-        -- and pmt.debit_credit='c'
-        -- and pmt.status='open'
-        -- and pmt.original_amount=pmt.open_amount
-        -- and pmt.value_date='2024-06-13' --
-        -- and pmt.currency='USD'
-        -- and pmt.original_amount in (20668.19)
-        -- and value_date='2024-05-20'
-        -- and type='MANUAL'
-        -- and pmt.currency='USD'
         """
+
+        if total_only:
+            sql = \
+            f"""
+            select 
+            round(sum(tb.original_amount), 2) original_amount,
+            round(sum(tb.original_amount), 2) open_amount,
+            currency
+            from 
+            (
+                {sql}        
+            ) tb
+            group by tb.currency
+            """
+
         ds = db.query(sql)
         return ds
     

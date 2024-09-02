@@ -4,12 +4,14 @@ from web.routes.home import bp_home
 from web.routes.payment import bp_payment
 from web.routes.transaction import bp_transaction
 from web.routes.arcesium import bp_arcesium
+from web.routes.cash_overview import bp_cash_overview
 
 def setup_blueprints(app):
     app.register_blueprint(bp_home)
     app.register_blueprint(bp_payment)
     app.register_blueprint(bp_transaction)
     app.register_blueprint(bp_arcesium)
+    app.register_blueprint(bp_cash_overview)
 
 def create_app():
     app = Flask(__name__,
@@ -21,6 +23,6 @@ def create_app():
     return app
 
 if __name__ == "__main__":
-    load_dotenv(find_dotenv())    
+    load_dotenv(find_dotenv())
     app = create_app()
     app.run()

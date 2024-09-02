@@ -8,4 +8,4 @@ bp_transaction = Blueprint("bp_transaction", __name__)
 def transaction_list(id):
     transaction = Transaction()
     rs = transaction.get_dealer_transaction(id)
-    return render_template("transaction.html", rs=rs)
+    return render_template("transaction.html", id=id, rs=rs)

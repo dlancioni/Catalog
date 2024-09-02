@@ -1,0 +1,52 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<h2>Cash Overview</h2>
+
+<form id="form1" name="form1">
+  <input type="text" id="id" value="{{ id }}"> <input type="button" value="Query" onClick="query()">
+</form>
+
+<div style="overflow-x:auto;"> 
+
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th scope="col">Payment</th>
+            <th scope="col">Transactions</th>
+            <th scope="col">Arcesium</th>          
+          </tr>
+        </thead>
+        <tbody>
+              <tr>
+                <td>{{ '{:,.2f}'.format(data[0]) }}</td>
+                <td>{{ '{:,.2f}'.format(data[1]) }}</td>
+                <td>{{ '{:,.2f}'.format(data[2]) }}</td>
+              </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+
+<script>
+  function query() {
+
+      form = document.getElementById("form1")
+      id = document.getElementById("id").value
+
+      if (id.trim() == "") {
+          alert("Payment Id is mandatory");
+          return;
+      }     
+
+      form1.method = "post"
+      form.action = "/cash_overview_list/" + id
+      form.submit()
+  }
+</Script>  
+
+
+{% endblock %}
+
