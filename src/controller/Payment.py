@@ -4,12 +4,12 @@ db = Db()
 
 class Payment():
 
-    def get_payment(self, payment_id, total_only=False):
+    def get_payment(self, payment_id, query="All"):
         sql = f"""
         select 
             pmt.id,
-            pmt.original_amount,
-            pmt.open_amount,
+            round(pmt.original_amount, 2) original_amount,
+            round(pmt.open_amount, 2) open_amount,
             pmt.value_date,
             pmt.currency,
             pmt.type,
@@ -38,7 +38,7 @@ class Payment():
         and pmt.id in ({payment_id})
         """
 
-        if total_only:
+        if query == "Total":
             sql = \
             f"""
             select 

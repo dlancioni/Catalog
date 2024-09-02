@@ -4,7 +4,7 @@ db = Db()
 
 class Arcesium():
 
-    def get_trade(self, payment_id, total_only=False):
+    def get_trade(self, payment_id, query="All"):
         sql = f"""
         select 
         trade_id, 
@@ -26,7 +26,7 @@ class Arcesium():
             when quantity > 0 then 'B'
             else 'S'
         end as side,
-        quantity, 
+        round(quantity, 2) quantity, 
         currency, 
         date(settle_date) as settle_date, 
         date(time_entered) as time_entered
@@ -36,7 +36,7 @@ class Arcesium():
         and (comment like '%RA_NO [{payment_id}]%')
         """
 
-        if total_only:
+        if query == "Total":
             sql = \
             f"""
             select 
@@ -47,6 +47,20 @@ class Arcesium():
             ) tb
             order by tb.time_entered asc
             """
+
+        if query == "Total By Time Entered":
+            sql = \
+            f"""
+            select 
+                tb.time_entered,
+                sum(round(tb.quantity, 2)) quantity
+            from 
+            (
+                {sql}        
+            ) tb
+            group by tb.time_entered
+            order by tb.time_entered asc
+            """            
 
         ds = db.query(sql)
         return ds

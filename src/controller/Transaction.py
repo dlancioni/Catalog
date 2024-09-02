@@ -4,7 +4,7 @@ db = Db()
 
 class Transaction():
     
-    def get_dealer_transaction(self, payment_id, total_only=False):
+    def get_dealer_transaction(self, payment_id, query="All"):
         sql = f"""
         select 
             geo, 
@@ -14,14 +14,14 @@ class Transaction():
             post_dt, 
             sec_rf_key, 
             effec_dt, 
-            amt_lc
+            round(amt_lc, 2) amt_lc
         from pfs_ar.igf.dealer_transactions
         where ra_no <> 0
         and geo_id = 0 
         and ra_no = {payment_id}
         """
 
-        if total_only:
+        if query == "Total":
             sql = \
             f"""
             select 
