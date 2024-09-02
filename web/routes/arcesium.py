@@ -8,4 +8,4 @@ bp_arcesium = Blueprint("bp_arcesium", __name__)
 def arcesium_list(id):
     arcesium = Arcesium()
     rs = arcesium.get_trade(id)
-    return render_template("arcesium.html", rs=rs)
+    return render_template("arcesium.html", id=id, rs=rs)

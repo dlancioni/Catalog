@@ -8,4 +8,4 @@ bp_payment = Blueprint("payment", __name__)
 def payment_list(id):
     payment = Payment()
     rs = payment.get_payment(id)
-    return render_template("payment.html", rs=rs)
+    return render_template("payment.html", id=id, rs=rs)
