@@ -23,16 +23,25 @@ def cash_overview_list(id):
     if int(id) > 0:
 
         rs = payment.get_payment(id, "Total")
-        total_payment = round(Decimal(rs[0][0]), 2)
-        data.append(total_payment)
+        if rs[0][0] != None:            
+            total_payment = round(Decimal(rs[0][0]), 2)
+        else:
+            total_payment = round(0, 2)                
+        data.append(total_payment)            
 
         rs = transaction.get_dealer_transaction(id, "Total")
-        total_transaction = round(Decimal(rs[0][0]), 2)
-        data.append(total_transaction)
+        if rs[0][0] != None:
+            total_transaction = round(Decimal(rs[0][0]), 2)
+        else:    
+            total_transaction = round(0, 2)
+        data.append(total_transaction)            
 
         rs = arcesium.get_trade(id, "Total")
-        total_arcesium = round(Decimal(rs[0][0]), 2)
-        data.append(rs[0][0])
+        if rs[0][0] != None:
+            total_arcesium = round(Decimal(rs[0][0]), 2)
+        else:    
+            total_arcesium = round(0, 2)            
+        data.append(total_arcesium)            
 
         rs = arcesium.get_trade(id, "Total By Time Entered")
 
