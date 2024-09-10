@@ -16,7 +16,7 @@ def cash_overview_list(id):
     arcesium = Arcesium()
 
     i = 0
-    flag_action = False
+    found = False
     total = Decimal(0)
     data = list()
     diff = list()
@@ -45,37 +45,25 @@ def cash_overview_list(id):
 
         rs = arcesium.get_trade(id, "Total By Time Entered")
 
+
         for item in rs:
             i = i + 1
             enter_date = item[0]
             enter_amount = round(Decimal(item[1]), 2)
-            checked_amount = total_arcesium -  enter_amount
-            total = total + enter_amount
 
             # Rule 1
-            if abs(checked_amount) == abs(total_payment) and abs(checked_amount) == abs(total_transaction):
-                action = "No action"
-            else:    
-                action = "Remove this date from Arcesium"
-                flag_action = True
+            if found == False:
+                if abs(enter_amount) == abs(total_payment) and abs(enter_amount) == abs(total_transaction):
+                    action = "Right position, remove the others"
+                    found = True
+                else:    
+                    action = ""
+                    found = False                    
 
-            # Rule 2
-            if len(rs) == 2:
-                if len(rs) == i:
-                    if abs(total) > total_transaction:
-                        if abs(total) == abs(total_arcesium):
-                            if flag_action == False:
-                                action = "Remove entry from Arcesium"
-
-            # Rule 3 not a break
-            if abs(total_payment) == abs(total_transaction) and abs(total_transaction) == abs(total_arcesium):
-                action = "No action"
-
-
-            # keep the item    
-            arr = [enter_date, enter_amount, checked_amount, action]
+            arr = [enter_date, enter_amount, action]
             diff.append(arr)
-
+            action = ""
+            total = total + enter_amount
 
         data.append(diff)
 
@@ -85,5 +73,5 @@ def cash_overview_list(id):
          data.append(0)   
          data.append(0)   
 
-    return render_template("cash_overview.html", id=id, data=data)
+    return render_template("cash_overview.html", id=id, data=data, total=total)
     
