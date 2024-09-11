@@ -52,22 +52,20 @@
 
 
 <script>
-  function query() {
 
+  function query() {
       form = document.getElementById("form1")
       id = document.getElementById("id").value
-
       if (id.trim() == "") {
           alert("Payment Id is mandatory");
           return;
       }     
-
       form1.method = "post"
       form.action = "/cash_overview_list/" + id
       form.submit()
   }
-</Script>  
 
+</Script>  
 
 {% endblock %}
 

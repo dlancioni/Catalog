@@ -6,6 +6,7 @@ from web.routes.transaction import bp_transaction
 from web.routes.arcesium import bp_arcesium
 from web.routes.cash_overview import bp_cash_overview
 from web.routes.report import bp_report
+from web.routes.file import bp_file
 
 def setup_blueprints(app):
     app.register_blueprint(bp_home)
@@ -14,6 +15,7 @@ def setup_blueprints(app):
     app.register_blueprint(bp_arcesium)
     app.register_blueprint(bp_cash_overview)
     app.register_blueprint(bp_report)
+    app.register_blueprint(bp_file)
 
 def create_app():
     app = Flask(__name__,

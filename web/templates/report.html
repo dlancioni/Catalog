@@ -180,27 +180,42 @@
     <table class="table table-borderless">
       <thead>
         <tr>
-          <th scope="col">Trade Id</th>
-          <th scope="col">Trade Date</th>
-          <th scope="col">Side</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Currency</th>
-          <th scope="col">St. Date</th>
-          <th scope="col">Time Entered</th>
+            <th scope="col">TRADE_ID</th>
+            <th scope="col">TRADE_DATE</th>
+            <th scope="col">SIDE</th>
+            <th scope="col">QUANTITY</th>
+            <th scope="col">CUSTODIAN_ACCOUNT_NAME</th>
+            <th scope="col">CURRENCY</th>
+            <th scope="col">BOOK_NAME</th>
+            <th scope="col">SETTLE_DATE</th>
+            <th scope="col">ACTUAL_SETTLE_DATE</th>
+            <th scope="col">PNL_SPN</th>
+            <th scope="col">COMMENT</th>
+            <th scope="col">EXTERNAL_ID</th>
+            <th scope="col">TIME_ENTERED</th>
+            <th scope="col">SPN_DESC</th>
+            <th scope="col">SPN</th>
         </tr>
       </thead>
       <tbody>
-  
         {% if rs_arc|length > 0 %}
             {% for item in rs_arc %}
             <tr>
-              <td>{{ item[0] }}</td>
-              <td>{{ item[1] }}</td>
-              <td>{{ item[2] }}</td>  
-              <td>{{ '{:,.2f}'.format(item[3]) }}</td>          
-              <td>{{ item[4] }}</td>
-              <td>{{ item[5] }}</td>          
-              <td>{{ item[6] }}</td>
+                <td>{{ item[0] }}</td>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                <td>{{ '{:,.2f}'.format(item[3]) }}</td>
+                <td>{{ item[4] }}</td>
+                <td>{{ item[5] }}</td>
+                <td>{{ item[6] }}</td>
+                <td>{{ item[7] }}</td>
+                <td>{{ item[8] }}</td>
+                <td>{{ item[9] }}</td>
+                <td>{{ item[10] }}</td>
+                <td>{{ item[11] }}</td>
+                <td>{{ item[12] }}</td>
+                <td>{{ item[13] }}</td>
+                <td>{{ item[14] }}</td>
             </tr>
             </p>
             {% endfor %}
@@ -210,22 +225,20 @@
   </div>
 
 <script>
-  function query() {
 
+  function query() {
       form = document.getElementById("form1")
       id = document.getElementById("id").value
-
       if (id.trim() == "") {
           alert("Payment Id is mandatory");
           return;
       }         
-
       form1.method = "post"
       form.action = "/report_list/" + id
       form.submit()
   }
-</Script>  
 
+</Script>  
 
 {% endblock %}
 
