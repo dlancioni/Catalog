@@ -1,8 +1,10 @@
+from datetime import datetime
 from src.controller.db import Db
+from src.controller.base import Base
 
 db = Db()
 
-class Arcesium():
+class Arcesium(Base):
 
     def get_trade(self, payment_id, query="All"):
         sql = f"""
@@ -177,3 +179,53 @@ class Arcesium():
         else:
             ds = []
         return ds
+    
+
+    def get_file(self, payment_id, time_entered):
+        """
+        General Declaration
+        """    
+        OPERATION_CODE = 1
+        EXTERNAL_ID = 3
+        QUANTITY = 9
+        TRADE_DATE = 11
+        ARCESIUM_FREEZE_DATE = datetime(2024,6,30)
+
+        try:
+            """
+            Prepare the parameters
+            """     
+            payment_id = payment_id.strip()
+            time_entered = time_entered.strip()
+            freeze_date = ARCESIUM_FREEZE_DATE
+            
+            """
+            Get data from trades
+            """
+            arcesium = Arcesium()
+            rs = arcesium.get_trades_to_file(payment_id, time_entered)
+
+            """
+            Apply rules
+            """        
+            for row in rs:
+
+                # New unique key
+                row[EXTERNAL_ID] = row[EXTERNAL_ID] + "_David"
+
+                # Handle freeze period (New opposite or cancel)
+                trade_date = self.to_date(  str(row[TRADE_DATE]).strip()  , "yyyymmdd")
+                if trade_date < freeze_date:
+                    row[OPERATION_CODE] = "C"
+                else:
+                    row[OPERATION_CODE] = "N"
+                    row[QUANTITY] = row[QUANTITY] * -1
+
+        except:
+            print("An error occurred")          
+            rs = []
+        
+        """
+        Success
+        """
+        return rs        

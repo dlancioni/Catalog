@@ -55,11 +55,12 @@ class Db():
 
     def query(self, sql):
         os.system('cls')
-        #sql = sql.replace("\n", "")        
         print(sql)
         con = self.get_connection()
         cur = con.cursor()
         cur.execute(sql)
         rs = cur.fetchall()
         con.close()
+        lst1 = map(list, rs)
+        rs = list(lst1)
         return rs

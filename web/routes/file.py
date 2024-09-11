@@ -7,13 +7,19 @@ bp_file = Blueprint("file", __name__)
 @bp_file.route("/file_list/<id>/<dt>", methods=['GET', 'POST'])
 def file_list(id, dt):
 
-    id = id.strip()
-    dt = dt.strip()
+    """
+    Handle input
+    """    
+    payment_id = id.strip()
+    time_entered = dt.strip()
 
-    if id == "0": id = ""
-    if dt == "0": dt = ""
-
+    """
+    Get trades and apply conversions
+    """    
     arcesium = Arcesium()
-    rs = arcesium.get_trades_to_file(id, dt)
-      
-    return render_template("file.html", id=id, dt=dt, rs=rs)
+    rs = arcesium.get_file(payment_id, time_entered)
+
+    """
+    Render contents, then copy/paste to excel
+    """
+    return render_template("file.html", id=payment_id, dt=time_entered, rs=rs)
