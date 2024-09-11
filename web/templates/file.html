@@ -2,10 +2,22 @@
 
 {% block content %}
 
-<h2>Arcesium</h2>
+<h2>File</h2>
 
 <form id="form1" name="form1">
-  <input type="text" id="id" value="{{ id }}"> <input type="button" value="Query" onClick="query()">
+
+  <table>
+      <tr>
+          <td>RA No</td><td><input type="text" id="id" value="{{ id }}" size="50"></td>
+      </tr>
+      <tr>
+        <td>Entry Date</td><td><input type="text" id="dt" value="{{ dt }}" size="50"></td>
+    </tr>      
+  </table>
+  <br>
+  <input type="button" value="Query" onClick="query()">
+
+
 </form>
 
 <div style="overflow-x:auto;">  
@@ -130,12 +142,18 @@
   function query() {
       form = document.getElementById("form1")
       id = document.getElementById("id").value
+      dt = document.getElementById("dt").value
       if (id.trim() == "") {
           alert("Payment Id is mandatory");
           return;
       }     
+      if (dt.trim() == "") 
+      {
+          alert('Date(s) are mandatory');
+          return;
+      }      
       form1.method = "post"
-      form.action = "/file_list/" + id
+      form.action = "/file_list/" + id + "/" + dt
       form.submit()
   }
 

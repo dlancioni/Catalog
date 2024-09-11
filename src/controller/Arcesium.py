@@ -71,7 +71,7 @@ class Arcesium():
         return ds
     
 
-    def get_trades_to_file(self):
+    def get_trades_to_file(self, payment_id, payment_dt):
         sql = f"""
         SELECT 
         TRADE_ID AS "TRADE_ID-TO DELETE"
@@ -162,19 +162,18 @@ class Arcesium():
         WHERE 1 = 1        
         AND TRADE_ID IN 
         (
-            'TE59003075',
-            'TE58999774',
-            'TE58999772',
-            'TE58999778',
-            'TE60247507',
-            'TE60247508',
-            'TE60247510',
-            'TE60247519',
-            'TE60247509',
-            'TE60247520',
-            'TE60247518'
+            SELECT
+            TR.TRADE_ID
+            FROM PFS_AR.ARCESIUM.TRADES_RAW TR
+            WHERE 1 = 1
+            AND TR.EXTERNAL_ID LIKE '900%' 
+            AND (COMMENT LIKE '%RA_NO [{payment_id}]%')
+            AND SUBSTR(TR.TIME_ENTERED, 1, 10) in ( {payment_dt} )
+            ORDER BY TR.TIME_ENTERED
         )
         """
-
-        ds = db.query(sql)
-        return ds    
+        if payment_id != "" and payment_dt != "":
+            ds = db.query(sql)
+        else:
+            ds = []
+        return ds
