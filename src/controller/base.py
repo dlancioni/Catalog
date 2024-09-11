@@ -1,5 +1,9 @@
 from datetime import datetime
 class Base():
+
+    ARCESIUM_FREEZE_DATE = datetime(2024, 6, 30)
+    ARCESIUM_FREEZE_DATE_T1 = "20240701"
+
     def __init__(self) -> None:
         pass
 

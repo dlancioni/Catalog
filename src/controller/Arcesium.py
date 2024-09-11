@@ -185,11 +185,13 @@ class Arcesium(Base):
         """
         General Declaration
         """    
+        TRADE_ID = 0
         OPERATION_CODE = 1
         EXTERNAL_ID = 3
         QUANTITY = 9
         TRADE_DATE = 11
-        ARCESIUM_FREEZE_DATE = datetime(2024,6,30)
+        SETTLEMENT_DATE = 13
+        ACTUAL_SETT_DATE = 14
 
         try:
             """
@@ -197,7 +199,8 @@ class Arcesium(Base):
             """     
             payment_id = payment_id.strip()
             time_entered = time_entered.strip()
-            freeze_date = ARCESIUM_FREEZE_DATE
+            freeze_date = self.ARCESIUM_FREEZE_DATE
+            freeze_date_t1 = self.ARCESIUM_FREEZE_DATE_T1
             
             """
             Get data from trades
@@ -210,19 +213,27 @@ class Arcesium(Base):
             """        
             for row in rs:
 
-                # New unique key
-                row[EXTERNAL_ID] = row[EXTERNAL_ID] + "_David"
-
-                # Handle freeze period (New opposite or cancel)
+                # Get the trade date
                 trade_date = self.to_date(  str(row[TRADE_DATE]).strip()  , "yyyymmdd")
-                if trade_date < freeze_date:
+
+                # New unique key
+                row[EXTERNAL_ID] = row[EXTERNAL_ID] + "_" + row[TRADE_ID] + "_" + "CA"
+
+                # Before freeze mark as first day after freeze
+                if trade_date <= freeze_date:
+                    row[TRADE_DATE] = freeze_date_t1
+                    row[SETTLEMENT_DATE] = freeze_date_t1
+                    row[ACTUAL_SETT_DATE] = freeze_date_t1
+
+                # Cancel or revert
+                if trade_date <= freeze_date:
                     row[OPERATION_CODE] = "C"
                 else:
                     row[OPERATION_CODE] = "N"
                     row[QUANTITY] = row[QUANTITY] * -1
 
         except:
-            print("An error occurred")          
+            print("An error occurred")
             rs = []
         
         """
