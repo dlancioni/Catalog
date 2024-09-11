@@ -157,25 +157,22 @@ class Arcesium():
         , to_char(TO_DATE(SETTLE_DATE) ,  'YYYYMMDD')::int AS "Cash Movement Date"	 
         , to_char(TO_DATE(SETTLE_DATE) ,  'YYYYMMDD')::int AS "Invoice Settlement Date"	 
         , to_char(TO_DATE(MATURITY_DATE) ,  'YYYYMMDD')::int AS "Invoice Maturity Date"	 
-        , 'Gross' AS "Invoice Settlement Type"
-        
+        , 'Gross' AS "Invoice Settlement Type"        
         FROM PFS_AR.ARCESIUM.TRADES_RAW
-
-        WHERE 1=1
-        
+        WHERE 1 = 1        
         AND TRADE_ID IN 
         (
-        'TE59003075',
-        'TE58999774',
-        'TE58999772',
-        'TE58999778',
-        'TE60247507',
-        'TE60247508',
-        'TE60247510',
-        'TE60247519',
-        'TE60247509',
-        'TE60247520',
-        'TE60247518'
+            'TE59003075',
+            'TE58999774',
+            'TE58999772',
+            'TE58999778',
+            'TE60247507',
+            'TE60247508',
+            'TE60247510',
+            'TE60247519',
+            'TE60247509',
+            'TE60247520',
+            'TE60247518'
         )
         """
 

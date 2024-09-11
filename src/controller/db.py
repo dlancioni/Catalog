@@ -54,7 +54,9 @@ class Db():
         return con    
 
     def query(self, sql):
-        sql = sql.replace("\n", "")        
+        os.system('cls')
+        #sql = sql.replace("\n", "")        
+        print(sql)
         con = self.get_connection()
         cur = con.cursor()
         cur.execute(sql)
