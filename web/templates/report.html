@@ -11,97 +11,172 @@
 <br>
 
 <h2>Payment</h2>
-<!-- Payment -->
 <div className="table-responsive">
-<table class="table table-borderless">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">ORIGINAL_AMOUNT</th>
-        <th scope="col">OPEN_AMOUNT</th>
-        <th scope="col">TYPE</th>
-        <th scope="col">STATUS</th>
-        <th scope="col">VALUE_DATE</th>
-        <th scope="col">CURRENCY</th>
-        <th scope="col">REFERENCE</th>
-        <th scope="col">DEBIT_CREDIT</th>
-        <th scope="col">PROGRAM_CODE</th>
-        <th scope="col">PROGRAM_NAME</th>
-        <th scope="col">ACCOUNT_NUMBER</th>
-        <th scope="col">MODIFIED_DATE</th>       
-      </tr>
-    </thead>
-    <tbody>
-    {% if rs_pmt|length > 0 %}
-        {% for item in rs_pmt %}
-        <tr>
-            <td>{{ item[0] }}</td>
-            <td>{{ '{:,.2f}'.format(item[1]) }}</td>
-            <td>{{ '{:,.2f}'.format(item[2]) }}</td>
-            <td>{{ item[3] }}</td>
-            <td>{{ item[4] }}</td>
-            <td>{{ item[5] }}</td>
-            <td>{{ item[6] }}</td>
-            <td>{{ item[7] }}</td>
-            <td>{{ item[8] }}</td>
-            <td>{{ item[9] }}</td>
-            <td>{{ item[10] }}</td>
-            <td>{{ item[11] }}</td>
-            <td>{{ item[12] }}</td>
-            <td>{{ item[13] }}</td>            
-        </tr>
-        </p>
-        {% endfor %}
-    {% endif %}
-  </tbody>
-</table>
-</div>
-
-<hr>
-<!-- Transactions -->
-<h2>Transactions</h2>
-<div style="overflow-x:auto;">
-  <table class="table table-borderless">
-      <thead>
-        <tr>
-          <th scope="col">Geo</th>
-          <th scope="col">Fin Currency</th>        
-          <th scope="col">Trx Code</th>
-          <th scope="col">Trx Desc</th>
-          <th scope="col">Post Date</th>
-          <th scope="col">Sec Ref Key</th>  
-          <th scope="col">Effec Dt</th>
-          <th scope="col">Amount LC</th>
-             
-        </tr>
-      </thead>
-      <tbody>
-  
-        {% if rs_trx|length > 0 %}
-            {% for item in rs_trx %}
+    <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">ORIGINAL_AMOUNT</th>
+            <th scope="col">OPEN_AMOUNT</th>
+            <th scope="col">TYPE</th>
+            <th scope="col">STATUS</th>
+            <th scope="col">VALUE_DATE</th>
+            <th scope="col">CURRENCY</th>
+            <th scope="col">REFERENCE</th>
+            <th scope="col">DEBIT_CREDIT</th>
+            <th scope="col">PROGRAM_CODE</th>
+            <th scope="col">PROGRAM_NAME</th>
+            <th scope="col">ACCOUNT_NUMBER</th>
+            <th scope="col">MODIFIED_DATE</th>       
+          </tr>
+        </thead>
+        <tbody>
+        {% if rs_pmt|length > 0 %}
+            {% for item in rs_pmt %}
             <tr>
-              <td>{{ item[0] }}</td>
-              <td>{{ item[1] }}</td>
-              <td>{{ item[2] }}</td>  
-              <td>{{ item[3] }}</td>          
-              <td>{{ item[4] }}</td>
-              <td>{{ item[5] }}</td>          
-              <td>{{ item[6] }}</td>
-              <td>{{ '{:,.2f}'.format(item[7]) }}</td>                          
+                <td>{{ item[0] }}</td>
+                <td>{{ '{:,.2f}'.format(item[1]) }}</td>
+                <td>{{ '{:,.2f}'.format(item[2]) }}</td>
+                <td>{{ item[3] }}</td>
+                <td>{{ item[4] }}</td>
+                <td>{{ item[5] }}</td>
+                <td>{{ item[6] }}</td>
+                <td>{{ item[7] }}</td>
+                <td>{{ item[8] }}</td>
+                <td>{{ item[9] }}</td>
+                <td>{{ item[10] }}</td>
+                <td>{{ item[11] }}</td>
+                <td>{{ item[12] }}</td>
+                <td>{{ item[13] }}</td>            
             </tr>
             </p>
             {% endfor %}
         {% endif %}
       </tbody>
     </table>
+</div>
+
+<br>
+<h2>Transactions</h2>
+<div style="overflow-x:auto;">
+<table class="table table-borderless">
+    <thead>
+        <tr>
+        <th scope="col">SIDE</th>
+        <th scope="col">GEO_ID</th>
+        <th scope="col">GEO</th>
+        <th scope="col">FIN_ACCTID</th>
+        <th scope="col">FIN_NAME</th>
+        <th scope="col">FIN_CD</th>
+        <th scope="col">FIN_CUR</th>
+        <th scope="col">SUP_ACCTID</th>
+        <th scope="col">SUP_NAME</th>
+        <th scope="col">SUP_CD</th>
+        <th scope="col">DLR_ACCTID</th>
+        <th scope="col">DLR_NAME</th>
+        <th scope="col">DLR_CD</th>
+        <th scope="col">JRNL_CD</th>
+        <th scope="col">JRNL_DESC</th>
+        <th scope="col">TRX_CD</th>
+        <th scope="col">TRX_DESC</th>
+        <th scope="col">POST_DT</th>
+        <th scope="col">SEC_RF_KEY</th>
+        <th scope="col">EFFEC_DT</th>
+        <th scope="col">AMT_LC</th>
+        <th scope="col">RA_NO</th>
+        <th scope="col">RA_DESC</th>
+        <th scope="col">FST</th>
+        <th scope="col">UFA_RA_NO</th>
+        <th scope="col">UFA_POSTDT</th>
+        <th scope="col">UFA_SEQ_NO</th>
+        <th scope="col">UFA_FST</th>
+        <th scope="col">CRN_MATCH_ID</th>
+        <th scope="col">BINV_NO</th>
+        <th scope="col">LOAN_NO</th>
+        <th scope="col">INT_CRN_NO</th>
+        <th scope="col">UFA_BINVNO</th>
+        <th scope="col">BINV_TYPE</th>
+        <th scope="col">BOOK</th>
+        <th scope="col">SETT_DUEDT</th>
+        <th scope="col">LOAN_MATCH_ID</th>
+        <th scope="col">SPN</th>
+        <th scope="col">SETT_DUEDT</th>
+        <th scope="col">UNIQUE_ID</th>
+        <th scope="col">SUP_FEERTE</th>
+        <th scope="col">ORI_LOANNO</th>
+        <th scope="col">BINV_COML1</th>
+        <th scope="col">FUT_PMT_DT</th>
+        <th scope="col">CHG_ST_DT</th>
+        <th scope="col">BATCH_ID</th>
+        <th scope="col">MODIFIED</th>
+        <th scope="col">LINE_NO</th>
+        <th scope="col">MAT_CRN_NO</th>         
+        </tr>
+    </thead>
+    <tbody>
+
+      {% if rs_trx|length > 0 %}
+          {% for item in rs_trx %}
+          <tr>
+              <td>{{ item[0] }}</td>
+              <td>{{ item[1] }}</td>
+              <td>{{ item[2] }}</td>
+              <td>{{ item[3] }}</td>
+              <td>{{ item[4] }}</td>
+              <td>{{ item[5] }}</td>
+              <td>{{ item[6] }}</td>
+              <td>{{ item[7] }}</td>
+              <td>{{ item[8] }}</td>
+              <td>{{ item[9] }}</td>
+              <td>{{ item[10] }}</td>
+              <td>{{ item[11] }}</td>
+              <td>{{ item[12] }}</td>
+              <td>{{ item[13] }}</td>
+              <td>{{ item[14] }}</td>
+              <td>{{ item[15] }}</td>
+              <td>{{ item[16] }}</td>
+              <td>{{ item[17] }}</td>
+              <td>{{ item[18] }}</td>
+              <td>{{ '{:,.2f}'.format(item[19]) }}</td>
+              <td>{{ item[20] }}</td>
+              <td>{{ item[21] }}</td>
+              <td>{{ item[22] }}</td>
+              <td>{{ item[23] }}</td>
+              <td>{{ item[24] }}</td>
+              <td>{{ item[25] }}</td>
+              <td>{{ item[26] }}</td>
+              <td>{{ item[27] }}</td>
+              <td>{{ item[28] }}</td>
+              <td>{{ item[29] }}</td>
+              <td>{{ item[30] }}</td>
+              <td>{{ item[31] }}</td>
+              <td>{{ item[32] }}</td>
+              <td>{{ item[33] }}</td>
+              <td>{{ item[34] }}</td>
+              <td>{{ item[35] }}</td>
+              <td>{{ item[36] }}</td>
+              <td>{{ item[37] }}</td>
+              <td>{{ item[38] }}</td>
+              <td>{{ item[39] }}</td>
+              <td>{{ item[40] }}</td>
+              <td>{{ item[41] }}</td>
+              <td>{{ item[42] }}</td>
+              <td>{{ item[43] }}</td>
+              <td>{{ item[44] }}</td>
+              <td>{{ item[45] }}</td>
+              <td>{{ item[46] }}</td>
+              <td>{{ item[47] }}</td>
+              <td>{{ item[48] }}</td>             
+          </tr>
+          {% endfor %}
+      {% endif %}
+    </tbody>
+  </table>
   </div>
 
-
-  <hr>
-  <!-- Arcesium -->  
+  <br>
   <h2>Arcesium</h2>
-  <div style="overflow-x:auto;">
-  
+  <div style="overflow-x:auto;"> 
     <table class="table table-borderless">
       <thead>
         <tr>
@@ -132,7 +207,7 @@
         {% endif %}
       </tbody>
     </table>
-  </div>  
+  </div>
 
 <script>
   function query() {
