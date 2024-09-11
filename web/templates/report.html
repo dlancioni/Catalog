@@ -16,18 +16,19 @@
 <table class="table table-borderless">
     <thead>
       <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Original Amount</th>
-        <th scope="col">Open Amount</th>
-        <th scope="col">Value Date</th>
-        <th scope="col">Currency</th>
-        <th scope="col">Type</th>
-        <th scope="col">Reference</th>
-        <th scope="col">Status</th>
-        <th scope="col">Debit Credit</th>
-        <th scope="col">Program Code</th>
-        <th scope="col">Program Name</th>
-        <th scope="col">Account Number</th>                
+        <th scope="col">ID</th>
+        <th scope="col">ORIGINAL_AMOUNT</th>
+        <th scope="col">OPEN_AMOUNT</th>
+        <th scope="col">TYPE</th>
+        <th scope="col">STATUS</th>
+        <th scope="col">VALUE_DATE</th>
+        <th scope="col">CURRENCY</th>
+        <th scope="col">REFERENCE</th>
+        <th scope="col">DEBIT_CREDIT</th>
+        <th scope="col">PROGRAM_CODE</th>
+        <th scope="col">PROGRAM_NAME</th>
+        <th scope="col">ACCOUNT_NUMBER</th>
+        <th scope="col">MODIFIED_DATE</th>       
       </tr>
     </thead>
     <tbody>
@@ -37,15 +38,17 @@
             <td>{{ item[0] }}</td>
             <td>{{ '{:,.2f}'.format(item[1]) }}</td>
             <td>{{ '{:,.2f}'.format(item[2]) }}</td>
-            <td>{{ item[3] }}</td>          
+            <td>{{ item[3] }}</td>
             <td>{{ item[4] }}</td>
-            <td>{{ item[5] }}</td>          
+            <td>{{ item[5] }}</td>
             <td>{{ item[6] }}</td>
             <td>{{ item[7] }}</td>
-            <td>{{ item[8] }}</td>                    
+            <td>{{ item[8] }}</td>
             <td>{{ item[9] }}</td>
             <td>{{ item[10] }}</td>
-            <td>{{ item[11] }}</td>                              
+            <td>{{ item[11] }}</td>
+            <td>{{ item[12] }}</td>
+            <td>{{ item[13] }}</td>            
         </tr>
         </p>
         {% endfor %}

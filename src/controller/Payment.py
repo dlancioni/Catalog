@@ -10,11 +10,11 @@ class Payment():
             pmt.id,
             round(pmt.original_amount, 2) original_amount,
             round(pmt.open_amount, 2) open_amount,
+            pmt.type,
+            pmt.status,            
             pmt.value_date,
             pmt.currency,
-            pmt.type,
             pmt.reference,
-            pmt.status,
             pmt.debit_credit,
             p.program_code,
             p.program_name,
@@ -24,7 +24,7 @@ class Payment():
             left outer join pfs_fdp_db_prod.etb_int.program p
             on pmt.program_id = p.program_id
             left outer join         
-            (        
+            (
                 select distinct
                 fba.id,
                 fba.bank_account_id,
