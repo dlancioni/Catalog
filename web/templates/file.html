@@ -3,23 +3,18 @@
 {% block content %}
 
 <h2>File</h2>
-<p>ATF_IBM_PERIDOT_TRADES_YYYYMMDD_ISSUE2_BREAKS_1_DL.CSV</p>
 
 <form id="form1" name="form1">
-
-  <table>
-      <tr>
-          <td>RA No</td><td><input type="text" id="id" value="{{ id }}" size="50"></td>
-      </tr>
-      <tr>
-          <td>Entry Date</td><td><input type="text" id="dt" value="{{ dt }}" size="50"></td>
-      </tr>      
-  </table>
-
-  <br>
-  
-  <input type="button" value="Query" onClick="query()">
-
+    <table>
+        <tr>
+            <td>RA No</td><td><input type="text" id="id" value="{{ id }}" size="50"></td>
+            <td><input type="button" value="Query" onClick="query()"></td>
+        </tr>
+        <tr>
+            <td>Entry Date</td><td><input type="text" id="dt" value="{{ dt }}" size="50"></td>
+            <td>Records: {{rs|length}}</td>
+        </tr>      
+    </table>
 </form>
 
 <div style="overflow-x:auto;">  
@@ -74,11 +69,30 @@
               <th scope="col">Funding Date</th>
               <th scope="col">Fx Trade Date</th>
               <th scope="col">Security Country</th>
-              <th scope="col">Tax</th>           
+              <th scope="col">Tax</th>
+              <th scope="col">CUSIP</th>
+              <th scope="col">Bloomberg Ticker</th>
+              <th scope="col">Security Geography</th>
+              <th scope="col">Security Geography Id</th>
+              <th scope="col">Supplier</th>
+              <th scope="col">Supplier Contract Id</th>
+              <th scope="col">Supplier Contract Code</th>
+              <th scope="col">Dealer</th>
+              <th scope="col">Dealer Contract Id</th>
+              <th scope="col">Dealer Contract Code</th>
+              <th scope="col">Financier</th>
+              <th scope="col">Financier Contract Id</th>
+              <th scope="col">Financier Contract Code</th>
+              <th scope="col">Holiday Adjust Coupon Amount</th>
+              <th scope="col">Invoice payment Date</th>
+              <th scope="col">Funding Currency</th>
+              <th scope="col">Cash Movement Date</th>
+              <th scope="col">Invoice Settlement Date</th>
+              <th scope="col">Invoice Maturity Date</th>
+              <th scope="col">Invoice Settlement Type</th>              
           </tr>
         </thead>
         <tbody>
-
           {% if rs|length > 0 %}
               {% for item in rs %}
               <tr>
@@ -131,6 +145,26 @@
                   <td>{{ item[46] }}</td>
                   <td>{{ item[47] }}</td>
                   <td>{{ item[48] }}</td>                
+                  <td>{{ item[49] }}</td>                
+                  <td>{{ item[50] }}</td>                
+                  <td>{{ item[51] }}</td>                
+                  <td>{{ item[52] }}</td>                
+                  <td>{{ item[53] }}</td>                
+                  <td>{{ item[54] }}</td>                
+                  <td>{{ item[55] }}</td>                
+                  <td>{{ item[56] }}</td>                
+                  <td>{{ item[57] }}</td>                
+                  <td>{{ item[58] }}</td>                
+                  <td>{{ item[59] }}</td>                
+                  <td>{{ item[60] }}</td>                
+                  <td>{{ item[61] }}</td>                
+                  <td>{{ item[62] }}</td>                
+                  <td>{{ item[63] }}</td>                
+                  <td>{{ item[64] }}</td>                
+                  <td>{{ item[65] }}</td>                
+                  <td>{{ item[66] }}</td>                
+                  <td>{{ item[67] }}</td>                
+                  <td>{{ item[68] }}</td>                
               </tr>
               </p>
               {% endfor %}

@@ -1,6 +1,7 @@
 from datetime import datetime
 from src.controller.db import Db
 from src.controller.base import Base
+from src.controller.Payment import Payment as Payment
 
 db = Db()
 
@@ -201,6 +202,13 @@ class Arcesium(Base):
             time_entered = time_entered.strip()
             freeze_date = self.ARCESIUM_FREEZE_DATE
             freeze_date_t1 = self.ARCESIUM_FREEZE_DATE_T1
+
+            """
+            Figure out payment type
+            """
+            payment = Payment()
+            rs = payment.get_payment(payment_id)            
+            payment_type = str(rs[0][3]).upper()
             
             """
             Get data from trades
@@ -210,14 +218,14 @@ class Arcesium(Base):
 
             """
             Apply rules
-            """        
+            """
             for row in rs:
 
                 # Get the trade date
                 trade_date = self.to_date(  str(row[TRADE_DATE]).strip()  , "yyyymmdd")
 
                 # New unique key
-                row[EXTERNAL_ID] = row[EXTERNAL_ID] + "_" + row[TRADE_ID] + "_" + "CA"
+                row[EXTERNAL_ID] = row[EXTERNAL_ID] + "_" + row[TRADE_ID] + "_" + "CANCEL"
 
                 # Before freeze mark as first day after freeze
                 if trade_date <= freeze_date:
@@ -225,12 +233,12 @@ class Arcesium(Base):
                     row[SETTLEMENT_DATE] = freeze_date_t1
                     row[ACTUAL_SETT_DATE] = freeze_date_t1
 
-                # Cancel or revert
-                if trade_date <= freeze_date:
-                    row[OPERATION_CODE] = "C"
-                else:
+                # Manual payment cannot be cancelled, must enter oposite side
+                if payment_type == "MANUAL":
                     row[OPERATION_CODE] = "N"
                     row[QUANTITY] = row[QUANTITY] * -1
+                else:
+                    row[OPERATION_CODE] = "C"
 
         except:
             print("An error occurred")
