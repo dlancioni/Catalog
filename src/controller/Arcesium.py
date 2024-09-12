@@ -209,12 +209,21 @@ class Arcesium(Base):
             payment = Payment()
             rs = payment.get_payment(payment_id)            
             payment_type = str(rs[0][3]).upper()
+
+            """
+            Format dates for in clause
+            """
+            sql = ""
+            arr = time_entered.split(",")
+            for item in arr:
+                sql = sql + "'" + item.strip() + "'" + ", "
+            sql = sql[:-2]    
             
             """
             Get data from trades
             """
             arcesium = Arcesium()
-            rs = arcesium.get_trades_to_file(payment_id, time_entered)
+            rs = arcesium.get_trades_to_file(payment_id, sql)
 
             """
             Apply rules
