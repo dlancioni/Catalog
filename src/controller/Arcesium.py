@@ -189,6 +189,7 @@ class Arcesium(Base):
         TRADE_ID = 0
         OPERATION_CODE = 1
         EXTERNAL_ID = 3
+        SIDE = 8
         QUANTITY = 9
         TRADE_DATE = 11
         SETTLEMENT_DATE = 13
@@ -247,6 +248,17 @@ class Arcesium(Base):
                     row[OPERATION_CODE] = "N"
                 else:
                     row[OPERATION_CODE] = "C"
+
+                # Manual payment must send opposite direction
+                if payment_type == "MANUAL":
+                    if row[SIDE] == "B": 
+                        row[SIDE] = "S"
+                    elif row[SIDE] == "S": 
+                        row[SIDE] = "B"
+                    elif row[SIDE] == "BC": 
+                        row[SIDE] = "SS"
+                    elif row[SIDE] == "SS": 
+                        row[SIDE] = "BC"
 
         except:
             print("An error occurred")
