@@ -8,14 +8,18 @@
   <input type="text" id="id" value="{{ id }}"> <input type="button" value="Query" onClick="query()">
 </form>
 
-<div style="overflow-x:auto;"> 
+<br>
 
+<hr>
+<h4>Overview</h4>
+<div style="overflow-x:auto;"> 
       <table class="table table-borderless">
         <thead>
           <tr>
             <th scope="col">Payment</th>
             <th scope="col">Transactions</th>
             <th scope="col">Arcesium</th>          
+            <th scope="col">Status</th>                      
           </tr>
         </thead>
         <tbody>
@@ -23,12 +27,15 @@
                 <td>{{ '{:,.2f}'.format(data[0]) }}</td>
                 <td>{{ '{:,.2f}'.format(data[1]) }}</td>
                 <td>{{ '{:,.2f}'.format(data[2]) }}</td>
+                <td>{{ data[4] }}</td>
               </tr>
         </tbody>
       </table>
       </div>
     </div>
 
+    <hr>
+    <h4>Arcesium Blotter</h4>    
     <table class="table table-borderless">
       <thead>
         <tr>
@@ -49,7 +56,6 @@
     </table>
     </div>
   </div>    
-
 
 <script>
 

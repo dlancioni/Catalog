@@ -20,6 +20,7 @@ def cash_overview_list(id):
     total = Decimal(0)
     data = list()
     diff = list()
+    status = ""
     if int(id) > 0:
 
         rs = payment.get_payment(id, "Total")
@@ -43,8 +44,12 @@ def cash_overview_list(id):
             total_arcesium = round(0, 2)            
         data.append(total_arcesium)            
 
-        rs = arcesium.get_trade(id, "Total By Time Entered")
+        if abs(total_payment) == abs(total_transaction) and abs(total_transaction) == abs(total_arcesium):
+            status = "Matched"
+        else:
+            status = "Divergent"
 
+        rs = arcesium.get_trade(id, "Total By Time Entered")
 
         for item in rs:
             i = i + 1
@@ -58,7 +63,10 @@ def cash_overview_list(id):
                     found = True
                 else:    
                     action = ""
-                    found = False                    
+                    found = False        
+
+            if status == "Matched":
+                action = ""
 
             arr = [enter_date, enter_amount, action]
             diff.append(arr)
@@ -66,12 +74,14 @@ def cash_overview_list(id):
             total = total + enter_amount
 
         data.append(diff)
-
+        data.append(status)                        
     else:
 
          data.append(0)   
          data.append(0)   
          data.append(0)   
+         data.append(0)            
+         data.append(0)            
 
     return render_template("cash_overview.html", id=id, data=data, total=total)
     
