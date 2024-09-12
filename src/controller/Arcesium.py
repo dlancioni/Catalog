@@ -245,7 +245,6 @@ class Arcesium(Base):
                 # Manual payment cannot be cancelled, must enter oposite side
                 if payment_type == "MANUAL":
                     row[OPERATION_CODE] = "N"
-                    row[QUANTITY] = row[QUANTITY] * -1
                 else:
                     row[OPERATION_CODE] = "C"
 
