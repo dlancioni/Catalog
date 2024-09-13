@@ -234,9 +234,6 @@ class Arcesium(Base):
                 # Get the trade date
                 trade_date = self.to_date(  str(row[TRADE_DATE]).strip()  , "yyyymmdd")
 
-                # New unique key
-                row[EXTERNAL_ID] = row[EXTERNAL_ID] + "_" + row[TRADE_ID] + "_" + "CANCEL"
-
                 # Before freeze mark as first day after freeze
                 if trade_date <= freeze_date:
                     row[TRADE_DATE] = freeze_date_t1
@@ -246,6 +243,7 @@ class Arcesium(Base):
                 # Manual payment cannot be cancelled, must enter oposite side
                 if payment_type == "MANUAL":
                     row[OPERATION_CODE] = "N"
+                    row[EXTERNAL_ID] = row[EXTERNAL_ID] + "_" + row[TRADE_ID] + "_" + "CANCEL"                    
                 else:
                     row[OPERATION_CODE] = "C"
 

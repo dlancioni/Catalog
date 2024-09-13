@@ -80,7 +80,7 @@ def cash_overview_list(id):
          data.append(0)   
          data.append(0)   
          data.append(0)   
-         data.append(0)            
+         data.append([])            
          data.append(0)            
 
     return render_template("cash_overview.html", id=id, data=data, total=total)
