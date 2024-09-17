@@ -9,13 +9,15 @@
         <tr>
             <td>RA No</td><td><input type="text" id="id" value="{{ id }}" size="50"></td>
             <td><input type="button" value="Query" onClick="query()"></td>
-            <td>atf_ibm_peridot_trades_yyyymmdd_dl_00000.csv</td>
         </tr>
         <tr>
             <td>Entry Date</td><td><input type="text" id="dt" value="{{ dt }}" size="50"></td>
-            <td>Records: {{rs|length}}</td>
-            <td></td>            
-        </tr>              
+            <td>Records: {{rs|length}}</td>       
+        </tr>    
+        <tr>
+            <td>File name</td>
+            <td><input type="text" id="dt" value="atf_ibm_peridot_trades_dl_{{today}}_{{ id }}.csv" size="50"></td>
+        </tr>                    
     </table>
 </form>
 

@@ -3,8 +3,8 @@ from flask.blueprints import Blueprint
 from src.controller.Payment import Payment as Payment
 from src.controller.Transaction import Transaction as Transaction
 from src.controller.Arcesium import Arcesium as Arcesium
-
 from decimal import Decimal
+
 
 bp_cash_overview = Blueprint("cash_overview", __name__)
 
