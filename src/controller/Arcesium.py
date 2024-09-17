@@ -1,3 +1,5 @@
+from time import time
+from calendar import calendar
 from datetime import datetime
 from src.controller.db import Db
 from src.controller.base import Base
@@ -176,6 +178,7 @@ class Arcesium(Base):
         )
         """
         if payment_id != "" and payment_dt != "":
+            db.log_query("trade_to_file.txt", sql)
             ds = db.query(sql)
         else:
             ds = []
@@ -196,6 +199,7 @@ class Arcesium(Base):
         ACTUAL_SETT_DATE = 14
 
         try:
+
             """
             Prepare the parameters
             """     
@@ -203,13 +207,6 @@ class Arcesium(Base):
             time_entered = time_entered.strip()
             freeze_date = self.ARCESIUM_FREEZE_DATE
             freeze_date_t1 = self.ARCESIUM_FREEZE_DATE_T1
-
-            """
-            Figure out payment type
-            """
-            payment = Payment()
-            rs = payment.get_payment(payment_id)            
-            payment_type = str(rs[0][3]).upper()
 
             """
             Format dates for in clause
@@ -240,28 +237,25 @@ class Arcesium(Base):
                     row[SETTLEMENT_DATE] = freeze_date_t1
                     row[ACTUAL_SETT_DATE] = freeze_date_t1
 
-                # Manual payment cannot be cancelled, must enter oposite side
-                if payment_type == "MANUAL":
-                    row[OPERATION_CODE] = "N"
-                    row[EXTERNAL_ID] = row[EXTERNAL_ID] + "_" + row[TRADE_ID] + "_" + "CANCEL"                    
-                else:
-                    row[OPERATION_CODE] = "C"
+                # Reversed position need a unique key
+                ts = datetime.today().strftime('%Y%m%d%H%M')
+
+                row[OPERATION_CODE] = "N"
+                row[EXTERNAL_ID] = row[EXTERNAL_ID] + "_" + row[TRADE_ID] + "_" + "REVERT" + "_" + str(ts)
 
                 # Manual payment must send opposite direction
-                if payment_type == "MANUAL":
-                    if row[SIDE] == "B": 
-                        row[SIDE] = "S"
-                    elif row[SIDE] == "S": 
-                        row[SIDE] = "B"
-                    elif row[SIDE] == "BC": 
-                        row[SIDE] = "SS"
-                    elif row[SIDE] == "SS": 
-                        row[SIDE] = "BC"
-
+                if row[SIDE] == "B": 
+                    row[SIDE] = "S"
+                elif row[SIDE] == "S": 
+                    row[SIDE] = "B"
+                elif row[SIDE] == "BC": 
+                    row[SIDE] = "SS"
+                elif row[SIDE] == "SS": 
+                    row[SIDE] = "BC"
         except:
             print("An error occurred")
             rs = []
-        
+                    
         """
         Success
         """

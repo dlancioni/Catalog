@@ -64,3 +64,8 @@ class Db():
         lst1 = map(list, rs)
         rs = list(lst1)
         return rs
+    
+    def log_query(self, name, sql):
+        f = open(f"c:\\temp\\{name}", "w")
+        f.write(sql)
+        f.close()
