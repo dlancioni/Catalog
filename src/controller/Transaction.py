@@ -25,5 +25,6 @@ class Transaction():
             ) tb
             """
 
+        db.log_query("query_transaction.txt", sql)
         ds = db.query(sql)
         return ds

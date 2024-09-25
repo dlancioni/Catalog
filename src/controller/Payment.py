@@ -33,7 +33,7 @@ class Payment():
                 pfs_fdp_db_prod.etb_int.bank_account ba
                 where fba.bank_account_id = ba.bank_account_id
             ) b
-            on pmt.funder_bank_account_id=b.id
+            on pmt.bank_account_id=b.id
         where 1=1
         and pmt.id in ({payment_id})
         """
@@ -51,7 +51,7 @@ class Payment():
             ) tb
             group by tb.currency
             """
-
+        db.log_query("query_payment.txt", sql)
         ds = db.query(sql)
         return ds
     
