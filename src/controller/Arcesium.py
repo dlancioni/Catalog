@@ -41,7 +41,7 @@ class Arcesium(Base):
         short_desc as spn  
         from pfs_ar.arcesium.trades_raw
         where 1=1
-        and external_id like '900%' 
+        -- and external_id like '900%' 
         and (comment like '%RA_NO [{payment_id}]%')
         order by time_entered asc
         """
@@ -171,7 +171,7 @@ class Arcesium(Base):
             TR.TRADE_ID
             FROM PFS_AR.ARCESIUM.TRADES_RAW TR
             WHERE 1 = 1
-            AND TR.EXTERNAL_ID LIKE '900%' 
+            -- AND TR.EXTERNAL_ID LIKE '900%' 
             AND (COMMENT LIKE '%RA_NO [{payment_id}]%')
             AND SUBSTR(TR.TIME_ENTERED, 1, 10) in ( {payment_dt} )
             ORDER BY TR.TIME_ENTERED
