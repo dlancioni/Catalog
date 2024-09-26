@@ -6,36 +6,26 @@ class Payment():
 
     def get_payment(self, payment_id, query="All"):
         sql = f"""
-        select 
-            pmt.id,
-            round(pmt.original_amount, 2) original_amount,
-            round(pmt.open_amount, 2) open_amount,
-            pmt.type,
-            pmt.status,            
-            pmt.value_date,
-            pmt.currency,
-            pmt.reference,
-            pmt.debit_credit,
-            p.program_code,
-            p.program_name,
-            b.account_number,
-            date(pmt.extra__modified_timestamp) as modified_date
-        from pfs_fdp_db_prod.etb_int.payment pmt
-            left outer join pfs_fdp_db_prod.etb_int.program p
-            on pmt.program_id = p.program_id
-            left outer join         
-            (
-                select distinct
-                fba.id,
-                fba.bank_account_id,
-                ba.account_number,            
-                from pfs_fdp_db_prod.etb_int.funder_bank_account fba,
-                pfs_fdp_db_prod.etb_int.bank_account ba
-                where fba.bank_account_id = ba.bank_account_id
-            ) b
-            on pmt.bank_account_id=b.id
-        where 1=1
-        and pmt.id in ({payment_id})
+        SELECT  
+        PMT.ID, PMT.ORIGINAL_AMOUNT, PMT.OPEN_AMOUNT, PMT.VALUE_DATE, PMT.CURRENCY, PMT.TYPE, PMT.REFERENCE, PMT.STATUS, PMT.DEBIT_CREDIT, P.PROGRAM_CODE, P.PROGRAM_NAME, B.ACCOUNT_NUMBER
+        , DATE(PMT.EXTRA__MODIFIED_TIMESTAMP) AS MODIFIED_DATE 
+        FROM PFS_FDP_DB_PROD.ETB_INT.PAYMENT PMT
+            LEFT OUTER JOIN PFS_FDP_DB_PROD.ETB_INT.PROGRAM P
+            ON PMT.PROGRAM_ID=P.PROGRAM_ID 
+            LEFT OUTER JOIN (
+            SELECT DISTINCT FBA.BANK_ACCOUNT_ID, BA.ACCOUNT_NUMBER
+            FROM PFS_FDP_DB_PROD.ETB_INT.FUNDER_BANK_ACCOUNT FBA
+            , PFS_FDP_DB_PROD.ETB_INT.BANK_ACCOUNT BA
+            WHERE FBA.BANK_ACCOUNT_ID=BA.BANK_ACCOUNT_ID
+            ) B 
+            ON PMT.BANK_ACCOUNT_ID= B.BANK_ACCOUNT_ID
+        WHERE 1=1
+        --AND P.PROGRAM_CODE='UNIRE'
+        --AND PMT.reference='C0042143313701'
+        --AND PMT.DEBIT_CREDIT='C' 
+        --AND PMT.STATUS='OPEN'
+        --AND PMT.ORIGINAL_AMOUNT=PMT.OPEN_AMOUNT
+        AND PMT.ID in ({payment_id})
         """
 
         if query == "Total":
@@ -54,4 +44,3 @@ class Payment():
         db.log_query("query_payment.txt", sql)
         ds = db.query(sql)
         return ds
-    
