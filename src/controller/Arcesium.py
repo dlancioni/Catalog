@@ -41,7 +41,7 @@ class Arcesium(Base):
         short_desc as spn  
         from pfs_ar.arcesium.trades_raw
         where 1=1
-        and currency = '{currency}'
+        -- and currency = '{currency}'
         -- and external_id like '900%' 
         and (comment like '%RA_NO [{payment_id}]%')
         order by time_entered asc

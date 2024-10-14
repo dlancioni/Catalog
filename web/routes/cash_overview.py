@@ -50,18 +50,18 @@ def cash_overview_list(id):
         else:
             status = "Divergent"
 
-        rs = arcesium.get_trade(id, "Total By Time Entered")
+        rs = arcesium.get_trade(id, currency, "Total By Time Entered")
 
         for item in rs:
             i = i + 1
             enter_date = item[0]
             enter_amount = round(Decimal(item[1]), 2)
-            currency = item[2]
+            enter_currency = item[2]
 
             # Rule 1
             if found == False:
                 if abs(enter_amount) == abs(total_payment) and abs(enter_amount) == abs(total_transaction):
-                    action = "Right position, remove the others"
+                    action = "Right position"
                     found = True
                 else:    
                     action = ""
@@ -70,13 +70,14 @@ def cash_overview_list(id):
             if status == "Matched":
                 action = ""
 
-            arr = [enter_date, enter_amount, currency, action]
+            arr = [enter_date, enter_amount, enter_currency, action]
             diff.append(arr)
             action = ""
             total = total + enter_amount
 
         data.append(diff)
-        data.append(status)                        
+        data.append(status)
+        data.append(currency)
     else:
 
          data.append(0)   
@@ -84,6 +85,7 @@ def cash_overview_list(id):
          data.append(0)   
          data.append([])            
          data.append(0)            
+         data.append("")     
 
     return render_template("cash_overview.html", id=id, data=data, total=total)
     
