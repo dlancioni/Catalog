@@ -33,13 +33,14 @@ class Payment():
             f"""
             select 
             round(sum(tb.original_amount), 2) original_amount,
-            round(sum(tb.original_amount), 2) open_amount,
-            currency
+            round(sum(tb.open_amount), 2) open_amount,
+            currency,
+            type
             from 
             (
                 {sql}        
             ) tb
-            group by tb.currency
+            group by tb.currency, tb.type
             """
         db.log_query("query_payment.txt", sql)
         ds = db.query(sql)

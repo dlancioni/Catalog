@@ -16,7 +16,10 @@
       <table class="table table-borderless">
         <thead>
           <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Currency</th>
             <th scope="col">Payment</th>
+            <th scope="col">Open Amount</th>            
             <th scope="col">Transactions</th>
             <th scope="col">Arcesium</th>          
             <th scope="col">Status</th>                      
@@ -24,8 +27,11 @@
         </thead>
         <tbody>
               <tr>
-                <td>{{ '{:,.2f}'.format(data[0]) }} {{ data[6] }}</td>
-                <td>{{ '{:,.2f}'.format(data[1]) }} {{ data[6] }}</td>
+                <td>{{ data[7] }}</td>
+                <td>{{ data[5] }}</td>
+                <td>{{ '{:,.2f}'.format(data[0]) }}</td>
+                <td>{{ '{:,.2f}'.format(data[6]) }}</td>
+                <td>{{ '{:,.2f}'.format(data[1]) }}</td>
                 <td>{{ '{:,.2f}'.format(data[2]) }}</td>
                 <td>{{ data[4] }}</td>
               </tr>

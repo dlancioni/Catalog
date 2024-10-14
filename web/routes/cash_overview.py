@@ -26,7 +26,9 @@ def cash_overview_list(id):
         rs = payment.get_payment(id, "Total")
         if rs[0][0] != None:            
             total_payment = round(Decimal(rs[0][0]), 2)
+            open_amount = round(Decimal(rs[0][1]), 2)
             currency = rs[0][2]
+            payment_type = str(rs[0][3])[0]
         else:
             total_payment = round(0, 2)                
         data.append(total_payment)            
@@ -78,6 +80,9 @@ def cash_overview_list(id):
         data.append(diff)
         data.append(status)
         data.append(currency)
+        data.append(open_amount)
+        data.append(payment_type)
+        
     else:
 
          data.append(0)   
@@ -86,6 +91,8 @@ def cash_overview_list(id):
          data.append([])            
          data.append(0)            
          data.append("")     
+         data.append(0)      
+         data.append("")                    
 
     return render_template("cash_overview.html", id=id, data=data, total=total)
     
