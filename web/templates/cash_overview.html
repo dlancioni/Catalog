@@ -42,6 +42,7 @@
         <tr>
           <th scope="col">Time Entered</th>
           <th scope="col">Amount</th>
+          <th scope="col">Currency</th>          
           <th scope="col">Action</th>
         </tr>
       </thead>
@@ -50,7 +51,8 @@
           <tr>
               <td>{{ item[0] }} </td>
               <td>{{ '{:,.2f}'.format(item[1]) }}</td>
-              <td>{{ item[2] }} </td>
+              <td>{{ item[2] }} </td>              
+              <td>{{ item[3] }} </td>
           </tr>
           {% endfor %}
       </tbody>

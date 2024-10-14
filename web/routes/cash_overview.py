@@ -26,18 +26,19 @@ def cash_overview_list(id):
         rs = payment.get_payment(id, "Total")
         if rs[0][0] != None:            
             total_payment = round(Decimal(rs[0][0]), 2)
+            currency = rs[0][2]
         else:
             total_payment = round(0, 2)                
         data.append(total_payment)            
 
-        rs = transaction.get_dealer_transaction(id, "Total")
+        rs = transaction.get_dealer_transaction(id, currency, "Total")
         if rs[0][0] != None:
             total_transaction = round(Decimal(rs[0][0]), 2)
         else:    
             total_transaction = round(0, 2)
         data.append(total_transaction)            
 
-        rs = arcesium.get_trade(id, "Total")
+        rs = arcesium.get_trade(id, currency, "Total")
         if rs[0][0] != None:
             total_arcesium = round(Decimal(rs[0][0]), 2)
         else:    
@@ -55,6 +56,7 @@ def cash_overview_list(id):
             i = i + 1
             enter_date = item[0]
             enter_amount = round(Decimal(item[1]), 2)
+            currency = item[2]
 
             # Rule 1
             if found == False:
@@ -68,7 +70,7 @@ def cash_overview_list(id):
             if status == "Matched":
                 action = ""
 
-            arr = [enter_date, enter_amount, action]
+            arr = [enter_date, enter_amount, currency, action]
             diff.append(arr)
             action = ""
             total = total + enter_amount

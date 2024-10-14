@@ -9,7 +9,7 @@ db = Db()
 
 class Arcesium(Base):
 
-    def get_trade(self, payment_id, query="All"):
+    def get_trade(self, payment_id, currency, query="All"):
         sql = f"""
         select trade_id, date(trade_date) as trade_date 
         , case when (   custodian_account_name ilike 'db_%' or custodian_account_name ilike 'citi_%' 
@@ -41,6 +41,7 @@ class Arcesium(Base):
         short_desc as spn  
         from pfs_ar.arcesium.trades_raw
         where 1=1
+        and currency = '{currency}'
         -- and external_id like '900%' 
         and (comment like '%RA_NO [{payment_id}]%')
         order by time_entered asc
@@ -63,13 +64,14 @@ class Arcesium(Base):
             f"""
             select 
                 tb.time_entered,
-                sum(round(tb.quantity, 2)) quantity
+                sum(round(tb.quantity, 2)) quantity,
+                currency
             from 
             (
                 {sql}        
             ) tb
-            group by tb.time_entered
-            order by tb.time_entered asc
+            group by tb.time_entered, currency
+            order by tb.time_entered, currency asc
             """            
 
         ds = db.query(sql)
